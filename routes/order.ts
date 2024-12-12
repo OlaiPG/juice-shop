@@ -151,7 +151,17 @@ module.exports = function placeOrder () {
             })
           }
 
-          db.ordersCollection.insert({
+          //db.ordersCollection.insert({
+          const { MongoClient } = require('mongodb');
+
+function (req, res) {
+    let query = { user: req.query.user.toString(), city: req.query.city.toString() };
+
+    MongoClient.connect(url, (err, db) => {
+        db.collection("users")
+        .find(query)
+        .toArray((err, docs) => { });
+    });
             promotionalAmount: discountAmount,
             paymentId: req.body.orderDetails ? req.body.orderDetails.paymentId : null,
             addressId: req.body.orderDetails ? req.body.orderDetails.addressId : null,
